@@ -124,9 +124,7 @@ fn process_number(_number: String) {
 fn unity(_num: String) -> String {
     let number: i8 = _num.parse::<i8>().unwrap();
     
-    if number == 0 {
-        return String::from("zero");
-    } else if number == 1 {
+    if number == 1 {
         return String::from("one");
     } else if number == 2 {
         return String::from("two");
@@ -142,8 +140,10 @@ fn unity(_num: String) -> String {
         return String::from("seven");
     } else if number == 8 {
         return String::from("eight");
-    } else {
+    } else if number == 9 {
         return String::from("nine");
+    } else {
+        return String::from("");
     }
 }
 
