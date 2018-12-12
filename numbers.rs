@@ -17,8 +17,6 @@ fn main() {
     // process the number and gives result
     process_number(str_number);
 
-
-    //println!("{}", );
 }
 
 // 1355823 -> "one million, three hundred fifty five thousand, eight hundred twenty three​​​
@@ -34,30 +32,51 @@ fn process_number(_number: String) {
     let num: i64 = _number.parse::<i64>().unwrap();
     let number: String = num.to_string();
 
-    // from 0 to 99
-    if num < 100 {
-        process0to99(_number);
+    if num == 0 {
+        print!("zero ");
         return;
     }
 
-    // hundreds
-    if num == 100 {
-        println!("one hundred");
-        return;
-    }
-    if number.len() <= 3 {
-        print!("{} {}", unity(substr(number, 0, 1)), "hundred " );
-        process0to99(substr(_number, 1, 3));
-        return;
-    }
+    // // from 0 to 99
+    // if num < 100 {
+    //     process0to99(number);
+    //     return;
+    // }
+
+    // // hundreds
+    // if num == 100 {
+    //     println!("one hundred");
+    //     return;
+    // }
+    // if number.len() <= 3 {
+    //     print!("{} {}", unity(substr(num.to_string(), 0, 1)), "hundred " );
+    //     process0to99(substr(number, 1, 3));
+    //     return;
+    // }
+
+    process_3_digits(num.to_string());
 
     // thousands
-    if num == 1000 {
-        println!("one thousand");
-        return;
-    }
+    // if num == 1000 {
+    //     println!("one thousand");
+    //     return;
+    // }
     if number.len() <= 6 {
-        println!("thousands");
+        if number.len() == 4 {
+            process_3_digits( substr(num.to_string(), 0, 1) );
+            print!("thousand ");
+            process_3_digits( substr(num.to_string(), 1, 4) );
+        }
+        if number.len() == 5 {
+            process_3_digits( substr(num.to_string(), 0, 2) );
+            print!("thousand ");
+            process_3_digits( substr(num.to_string(), 2, 5) );
+        }
+        if number.len() == 6 {
+            process_3_digits( substr(num.to_string(), 0, 3) );
+            print!("thousand ");
+            process_3_digits( substr(num.to_string(), 3, 6) );
+        }
         return;
     }
 
@@ -160,93 +179,116 @@ fn process0to99(_num: String) {
 
     // unity
     if num < 10 {
-        println!("{}", unity(_num));
+        print!("{} ", unity(_num));
         return;
     }
 
     // tens
     if num < 20 {
-        println!("{}", tens(_num));
+        print!("{} ", tens(_num));
         return;
     }
 
     // twenties
     if num == 20 {
-        println!("twenty");
+        print!("twenty ");
         return;
     }
     if (num >= 20) && (num < 30) {
-        println!("twenty {}", unity(substr(_num, 1, 2)) );
+        print!("twenty {}", unity(substr(_num, 1, 2)) );
         return;
     }
 
     // thirties
     if num == 30 {
-        println!("thirty");
+        print!("thirty ");
         return;
     }
     if (num >= 30) && (num < 40) {
-        println!("thirty {}", unity(substr(_num, 1, 2)) );
+        print!("thirty {} ", unity(substr(_num, 1, 2)) );
         return;
     }
 
     // forties
     if num == 40 {
-        println!("fourty");
+        print!("fourty ");
         return;
     }
     if (num >= 40) && (num < 50) {
-        println!("fourty {}", unity(substr(_num, 1, 2)) );
+        print!("fourty {} ", unity(substr(_num, 1, 2)) );
         return;
     }
     
     // fifties
     if num == 50 {
-        println!("fifty");
+        print!("fifty ");
         return;
     }
     if (num >= 50) && (num < 60) {
-        println!("fifty {}", unity(substr(_num, 1, 2)) );
+        print!("fifty {} ", unity(substr(_num, 1, 2)) );
         return;
     }
 
     // sixties
     if num == 60 {
-        println!("sixty");
+        print!("sixty ");
         return;
     }
     if (num >= 60) && (num < 70) {
-        println!("sixty {}", unity(substr(_num, 1, 2)) );
+        print!("sixty {} ", unity(substr(_num, 1, 2)) );
         return;
     }
 
     // seventies
     if num == 70 {
-        println!("seventy");
+        print!("seventy ");
         return;
     }
     if (num >= 70) && (num < 80) {
-        println!("seventy {}", unity(substr(_num, 1, 2)) );
+        print!("seventy {} ", unity(substr(_num, 1, 2)) );
         return;
     }
 
     // eighties
     if num == 80 {
-        println!("eighty");
+        print!("eighty ");
         return;
     }
     if (num >= 80) && (num < 90) {
-        println!("eighty {}", unity(substr(_num, 1, 2)) );
+        print!("eighty {} ", unity(substr(_num, 1, 2)) );
         return;
     }
 
     // nineties
     if num == 90 {
-        println!("ninety");
+        print !("ninety ");
         return;
     }
     if (num >= 90) && (num < 100) {
-        println!("ninety {}", unity(substr(_num, 1, 2)) );
+        print !("ninety {} ", unity(substr(_num, 1, 2)) );
+        return;
+    }
+}
+
+fn process_3_digits(_number: String) {
+    // converts to number to prevent inputs like 019 => turns into 19
+    let num: i64 = _number.parse::<i64>().unwrap();
+    let number: String = num.to_string();
+
+    // from 0 to 99
+    if num < 100 {
+        process0to99(number);
+        return;
+    }
+
+    // hundreds
+    if num == 100 {
+        println!("one hundred");
+        return;
+    }
+    if number.len() <= 3 {
+        print!("{} {}", unity(substr(num.to_string(), 0, 1)), "hundred " );
+        process0to99(substr(number, 1, 3));
         return;
     }
 }
