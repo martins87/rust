@@ -37,30 +37,13 @@ fn process_number(_number: String) {
         return;
     }
 
-    // // from 0 to 99
-    // if num < 100 {
-    //     process0to99(number);
-    //     return;
-    // }
-
-    // // hundreds
-    // if num == 100 {
-    //     println!("one hundred");
-    //     return;
-    // }
-    // if number.len() <= 3 {
-    //     print!("{} {}", unity(substr(num.to_string(), 0, 1)), "hundred " );
-    //     process0to99(substr(number, 1, 3));
-    //     return;
-    // }
-
-    process_3_digits(num.to_string());
+    // hundreds
+    if number.len() <= 3 {
+        process_3_digits(num.to_string());
+        return;
+    }
 
     // thousands
-    // if num == 1000 {
-    //     println!("one thousand");
-    //     return;
-    // }
     if number.len() <= 6 {
         if number.len() == 4 {
             process_3_digits( substr(num.to_string(), 0, 1) );
