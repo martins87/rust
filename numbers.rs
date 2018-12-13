@@ -1,8 +1,8 @@
 use std::io;
 
 fn main() {
-    let mut str_number = String::new();
     let mut stdin_input = String::new();
+    let mut str_number = String::new();
 
     // reads from stdin
     match io::stdin().read_line(&mut stdin_input) {
@@ -12,8 +12,14 @@ fn main() {
         Err(error) => println!("Error: {}", error),
     }
 
-    // process the number and gives result
-    process_number(str_number);
+    // checks if data is valid
+    match str_number.parse::<i64>() {
+        Ok(_ok) => {
+            // process the number and gives result
+            process_number(str_number);
+        }
+        Err(e) => println!("Data entered is not a number ({})", e), 
+    }  
 
 }
 
@@ -30,6 +36,8 @@ fn process_number(_number: String) {
     let number: String = num.to_string();
     let mut i: usize = 0;
 
+    print!("-> ");
+
     // zero
     if num == 0 {
         print!("zero ");
@@ -41,7 +49,7 @@ fn process_number(_number: String) {
         let temp: i64 = substr(num.to_string(), i, number.len()-15).parse::<i64>().unwrap();
         if temp != 0 {
             process_3_digits( temp.to_string() );
-            print!("quadrillion ");
+            print!("quadrillion, ");
         }
         i = number.len()-15;
     }
@@ -51,7 +59,7 @@ fn process_number(_number: String) {
         let temp: i64 = substr(num.to_string(), i, number.len()-12).parse::<i64>().unwrap();
         if temp != 0 {
             process_3_digits( temp.to_string() );
-            print!("trillion ");
+            print!("trillion, ");
         }
         i = number.len()-12;
     }
@@ -61,7 +69,7 @@ fn process_number(_number: String) {
         let temp: i64 = substr(num.to_string(), i, number.len()-9).parse::<i64>().unwrap();
         if temp != 0 {
             process_3_digits( temp.to_string() );
-            print!("billion ");
+            print!("billion, ");
         }
         i = number.len()-9;
     }
@@ -71,7 +79,7 @@ fn process_number(_number: String) {
         let temp: i64 = substr(num.to_string(), i, number.len()-6).parse::<i64>().unwrap();
         if temp != 0 {
             process_3_digits( temp.to_string() );
-            print!("million ");
+            print!("million, ");
         }
         i = number.len()-6;
     }
@@ -81,7 +89,7 @@ fn process_number(_number: String) {
         let temp: i64 = substr(num.to_string(), i, number.len()-3).parse::<i64>().unwrap();
         if temp != 0 {
             process_3_digits( temp.to_string() );
-            print!("thousand ");
+            print!("thousand, ");
         }
         i = number.len()-3;
     }
