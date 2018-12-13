@@ -1,5 +1,8 @@
 // Number scales: http://www.statman.info/conversions/number_scales.html
 
+// to run:
+// rustc parity_challenge.rs && ./parity_challenge parity_challenges
+
 use std::io;
 
 fn main() {
@@ -31,77 +34,72 @@ fn process_number(_number: String) {
     // converts to number to prevent inputs like 019 => turns into 19
     let num: i64 = _number.parse::<i64>().unwrap();
     let number: String = num.to_string();
+    let mut i: usize = 0;
 
+    // zero
     if num == 0 {
         print!("zero ");
         return;
     }
 
-    // hundreds
-    if number.len() <= 3 {
-        process_3_digits(num.to_string());
-        return;
-    }
-
-    // thousands
-    if number.len() <= 6 {
-        if number.len() == 4 {
-            process_3_digits( substr(num.to_string(), 0, 1) );
-            print!("thousand ");
-            process_3_digits( substr(num.to_string(), 1, 4) );
+    // quadrillions
+    if number.len() > 15 {
+        let temp: i64 = substr(num.to_string(), i, number.len()-15).parse::<i64>().unwrap();
+        if temp != 0 {
+            process_3_digits( temp.to_string() );
+            print!("quadrillion ");
         }
-        if number.len() == 5 {
-            process_3_digits( substr(num.to_string(), 0, 2) );
-            print!("thousand ");
-            process_3_digits( substr(num.to_string(), 2, 5) );
-        }
-        if number.len() == 6 {
-            process_3_digits( substr(num.to_string(), 0, 3) );
-            print!("thousand ");
-            process_3_digits( substr(num.to_string(), 3, 6) );
-        }
-        return;
-    }
-
-    // millions
-    if num == 1000000 {
-        println!("one million");
-        return;
-    }
-    if number.len() <= 9 {
-        println!("millions");
-        return;
-    }
-
-    // billions
-    if num == 1000000000 {
-        println!("one billion");
-        return;
-    }
-    if number.len() <= 12 {
-        println!("billions");
-        return;
+        i = number.len()-15;
     }
 
     // trillions
-    if num == 1000000000000 {
-        println!("one trillion");
-        return;
-    }
-    if number.len() <= 15 {
-        println!("trillions");
-        return;
+    if number.len() > 12 {
+        let temp: i64 = substr(num.to_string(), i, number.len()-12).parse::<i64>().unwrap();
+        if temp != 0 {
+            process_3_digits( temp.to_string() );
+            print!("trillion ");
+        }
+        i = number.len()-12;
     }
 
-    // quadrillions
-    if num == 1000000000000000 {
-        println!("one quadrillion");
-        return;
+    // billions
+    if number.len() > 9 {
+        let temp: i64 = substr(num.to_string(), i, number.len()-9).parse::<i64>().unwrap();
+        if temp != 0 {
+            process_3_digits( temp.to_string() );
+            print!("billion ");
+        }
+        i = number.len()-9;
     }
-    if number.len() <= 18 {
-        println!("quadrillions");
-        return;
+
+    // millions
+    if number.len() > 6 {
+        let temp: i64 = substr(num.to_string(), i, number.len()-6).parse::<i64>().unwrap();
+        if temp != 0 {
+            process_3_digits( temp.to_string() );
+            print!("million ");
+        }
+        i = number.len()-6;
     }
+
+    // thousands
+    if number.len() > 3 {
+        let temp: i64 = substr(num.to_string(), i, number.len()-3).parse::<i64>().unwrap();
+        if temp != 0 {
+            process_3_digits( temp.to_string() );
+            print!("thousand ");
+        }
+        i = number.len()-3;
+    }
+
+    // hundreds
+    if true {
+        let temp: i64 = substr(num.to_string(), i, number.len()).parse::<i64>().unwrap();
+        if temp != 0 {
+            process_3_digits( temp.to_string() );
+        }
+    }
+
 }
 
 fn unity(_num: String) -> String {
@@ -156,7 +154,7 @@ fn tens(_num: String) -> String {
     }
 }
 
-fn process0to99(_num: String) {
+fn process_0_to_99(_num: String) {
 
     let num: i64 = _num.parse::<i64>().unwrap();
 
@@ -178,7 +176,7 @@ fn process0to99(_num: String) {
         return;
     }
     if (num >= 20) && (num < 30) {
-        print!("twenty {}", unity(substr(_num, 1, 2)) );
+        print!("twenty {} ", unity(substr(_num, 1, 2)) );
         return;
     }
 
@@ -251,6 +249,11 @@ fn process0to99(_num: String) {
         print !("ninety {} ", unity(substr(_num, 1, 2)) );
         return;
     }
+
+    if num == 100 {
+        print !("one hundred " );
+        return;
+    }
 }
 
 fn process_3_digits(_number: String) {
@@ -260,18 +263,13 @@ fn process_3_digits(_number: String) {
 
     // from 0 to 99
     if num < 100 {
-        process0to99(number);
+        process_0_to_99(number);
         return;
     }
 
-    // hundreds
-    if num == 100 {
-        println!("one hundred");
-        return;
-    }
     if number.len() <= 3 {
-        print!("{} {}", unity(substr(num.to_string(), 0, 1)), "hundred " );
-        process0to99(substr(number, 1, 3));
+        print!("{} hundred ", unity(substr(num.to_string(), 0, 1)));
+        process_0_to_99(substr(number, 1, 3));
         return;
     }
 }
