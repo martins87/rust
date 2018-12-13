@@ -254,17 +254,21 @@ fn process_0_to_99(_num: String) {
 }
 
 fn process_3_digits(_number: String) {
-    // converts to number to prevent inputs like 019 => turns into 19
+    // converts to number to prevent inputs like 019, 007 or 000
     let num: i64 = _number.parse::<i64>().unwrap();
     let number: String = num.to_string();
 
-    if num >= 100 {
-        print!("{} hundred ", unity(substr(num.to_string(), 0, 1)));
+    // from 0 to 99
+    if num < 100 {	
+        process_0_to_99(number);	
+        return;	
     }
-
-    process_0_to_99(substr(number, 1, 3));
-    return;
-
+    
+    if number.len() <= 3 {	
+        print!("{} hundred ", unity(substr(num.to_string(), 0, 1)));
+        process_0_to_99(substr(number, 1, 3));	
+        return;	
+    }
 }
 
 fn substr(_string: String, _start: usize, _end: usize) -> String {
