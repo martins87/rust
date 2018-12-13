@@ -18,7 +18,7 @@ fn main() {
             // process the number and gives result
             process_number(str_number);
         }
-        Err(e) => println!("Data entered is not a number ({})", e), 
+        Err(e) => println!("Data entered is not a number: {}.", e), 
     }  
 
 }
@@ -40,7 +40,7 @@ fn process_number(_number: String) {
 
     // zero
     if num == 0 {
-        print!("zero ");
+        println!("zero");
         return;
     }
 
