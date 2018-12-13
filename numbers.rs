@@ -1,8 +1,3 @@
-// Number scales: http://www.statman.info/conversions/number_scales.html
-
-// to run:
-// rustc parity_challenge.rs && ./parity_challenge parity_challenges
-
 use std::io;
 
 fn main() {
@@ -22,7 +17,6 @@ fn main() {
 
 }
 
-// 1355823 -> "one million, three hundred fifty five thousand, eight hundred twenty three​​​
 fn process_number(_number: String) {
 
     // checks for overflow
@@ -100,6 +94,8 @@ fn process_number(_number: String) {
         }
     }
 
+    println!("");
+
 }
 
 fn unity(_num: String) -> String {
@@ -157,6 +153,11 @@ fn tens(_num: String) -> String {
 fn process_0_to_99(_num: String) {
 
     let num: i64 = _num.parse::<i64>().unwrap();
+
+    // 00
+    if num == 0 {
+        return;
+    }
 
     // unity
     if num < 10 {
@@ -250,10 +251,6 @@ fn process_0_to_99(_num: String) {
         return;
     }
 
-    if num == 100 {
-        print !("one hundred " );
-        return;
-    }
 }
 
 fn process_3_digits(_number: String) {
@@ -261,17 +258,13 @@ fn process_3_digits(_number: String) {
     let num: i64 = _number.parse::<i64>().unwrap();
     let number: String = num.to_string();
 
-    // from 0 to 99
-    if num < 100 {
-        process_0_to_99(number);
-        return;
+    if num >= 100 {
+        print!("{} hundred ", unity(substr(num.to_string(), 0, 1)));
     }
 
-    if number.len() <= 3 {
-        print!("{} hundred ", unity(substr(num.to_string(), 0, 1)));
-        process_0_to_99(substr(number, 1, 3));
-        return;
-    }
+    process_0_to_99(substr(number, 1, 3));
+    return;
+
 }
 
 fn substr(_string: String, _start: usize, _end: usize) -> String {
