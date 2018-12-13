@@ -8,7 +8,7 @@ The program must return a human-readable format.
 
 The output in this example should be
 
-``
+`one million, two hundred thirty four thousand, five hundred sixty seven`
 
 ## Usage
 
